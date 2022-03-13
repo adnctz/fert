@@ -13,13 +13,10 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     const duration: number = body?.duration;
 
     const data = {
-        execute
+        execute,
+        lastExecuted: new Date().toString(),
+        duration
     } as FertilizerPumpConfig
-
-    if (execute) {
-        data.lastExecuted = new Date().toString();
-        data.duration = duration;
-    }
 
     const result = await service.updateItem(`${rowKey}`, data)
 
